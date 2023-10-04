@@ -1,6 +1,7 @@
 import pygame, random
 from food import Food
 from settings import *
+import pymunk.pygame_util
 
 
 def circles_intersect(
@@ -48,3 +49,23 @@ def generate_walk_target(
             ),
         )
     return target
+
+
+def generate_physic_frame(space: pymunk.Space):
+    segment_shape = pymunk.Segment(space.static_body, (-1, 0), (-1, WINDOW.y), 1)
+    space.add(segment_shape)
+    segment_shape.elasticity = 0.4
+    segment_shape.friction = 1.0
+    segment_shape = pymunk.Segment(space.static_body, (0, -1), (WINDOW.x, -1), 1)
+    space.add(segment_shape)
+    segment_shape.elasticity = 0.4
+    segment_shape.friction = 1.0
+    segment_shape = pymunk.Segment(space.static_body, (WINDOW.x+1, 0), (WINDOW.x+1, WINDOW.y), 1)
+    space.add(segment_shape)
+    segment_shape.elasticity = 0.4
+    segment_shape.friction = 1.0
+    segment_shape = pymunk.Segment(space.static_body, (0, WINDOW.y), (WINDOW.x, WINDOW.y), 1)
+    space.add(segment_shape)
+    segment_shape.elasticity = 0.4
+    segment_shape.friction = 1.0
+
